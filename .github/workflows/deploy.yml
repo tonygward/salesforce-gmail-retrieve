@@ -1,0 +1,15 @@
+name: Retrieve Salesforce
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    name: Build & Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          ref: refs/heads/master
+          fetch-depth: 1
+      - run: git clone ${{ secrets.GIT_REPOSITORY_CONNECTION }}    
