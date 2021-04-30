@@ -59,10 +59,10 @@ jobs:
 
           # Get each Metadata Type from Salesforce
           sfdx_types=$(cat ../sfdx_types.json | jq -r '.result.metadataObjects[].xmlName')
-          for sfdx_type in $sfdx_types; do
-            # sfdx force:source:retrieve --metadata=$sfdx_type --loglevel=error
-            retrieve_salesforce_type $sfdx_type
+          for sfdx_type in $sfdx_types; do            
+            retrieve_salesforce_type $sfdx_type &
           done
+          wait
 
           exit 0
 
