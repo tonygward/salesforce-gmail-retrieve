@@ -30,6 +30,7 @@ jobs:
           login_status=$(cat sfdx_login.json | jq '.status')
           if [ $login_status -ne 0 ]; then
             echo "ERROR unable to login to Salesforce"
+            echo cat sfdx_login.json | jq '.message'
             exit 1
           fi          
       - run: |          
@@ -37,7 +38,7 @@ jobs:
           cd ${{ secrets.GIT_REPOSITORY_FOLDER }}
           temp_branch=$(date +'%Y%m%d-%H%M%S%N')
           git checkout -q -b $temp_branch       
-          cat ./sfdx_login.json
+          cat ../sfdx_login.json
           # default_username=$(cat sfdx_login.json | jq '.result.username')           
           # sfdx config:set defaultusername=$default_username         
           # sfdx force:mdapi:describemetadata > ./sfdx_types.json
