@@ -16,7 +16,6 @@ jobs:
           fetch-depth: 1
           ssh-private-key: ${{ secrets.GIT_SSH_PRIVATE_KEY }}      
       - run: ssh-add - <<< "${{ secrets.GIT_SSH_PRIVATE_KEY }}"
-      - run: |
-          ls      
-          git clone ${{ secrets.GIT_REPOSITORY_CONNECTION }}
-          ls
+      - run: |          
+          git clone ${{ secrets.GIT_REPOSITORY_CONNECTION }} .
+          ls-R
