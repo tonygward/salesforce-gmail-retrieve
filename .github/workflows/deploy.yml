@@ -16,10 +16,6 @@ jobs:
           fetch-depth: 1
           ssh-private-key: ${{ secrets.GIT_SSH_PRIVATE_KEY }}      
       - run: ssh-add - <<< "${{ secrets.GIT_SSH_PRIVATE_KEY }}"
-      - run: git clone ${{ secrets.GIT_REPOSITORY_CONNECTION }}
-      - run: ls
-      - run: cd ${{ secrets.GIT_REPOSITORY_FOLDER }}    
-      - run: temp_branch=$(date +'%Y%m%d-%H%M%S%N')
-      - run: echo "$temp_branch"
-      - run: git checkout -q -b $temp_branch  
-      # - run: npm    
+      - run: |
+          git clone ${{ secrets.GIT_REPOSITORY_CONNECTION }}
+          ls
