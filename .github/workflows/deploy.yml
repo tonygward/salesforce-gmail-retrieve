@@ -12,6 +12,6 @@ jobs:
         with:
           ref: refs/heads/master
           fetch-depth: 1
-      - run: ssh-agent -s
+      - run: ssh-agent -a $SSH_AUTH_SOCK > /dev/null
       - run: ssh-add - <<< "${{ secrets.GIT_SSH_PRIVATE_KEY }}"
       - run: git clone ${{ secrets.GIT_REPOSITORY_CONNECTION }}    
