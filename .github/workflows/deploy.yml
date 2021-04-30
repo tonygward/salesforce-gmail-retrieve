@@ -59,6 +59,10 @@ jobs:
             #   return
             # fi 
 
+            if [ $sfdx_type -ne "ApexClass" ]; then
+              return
+            fi
+
             local sfdx_type_output="../sfdx_type_${sfdx_type}.json"                        
             sfdx force:source:retrieve --metadata=$sfdx_type --loglevel=error > $sfdx_type_output
           } 
