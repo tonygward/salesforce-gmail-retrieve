@@ -14,18 +14,14 @@ jobs:
         with:
           ref: refs/heads/master
           fetch-depth: 1
-          ssh-private-key: ${{ secrets.GIT_SSH_PRIVATE_KEY }}      
-      - name: Setup SSH Private Key
-      - run: ssh-add - <<< "${{ secrets.GIT_SSH_PRIVATE_KEY }}"
-      - name: Install Salesforce CLI
+          ssh-private-key: ${{ secrets.GIT_SSH_PRIVATE_KEY }}            
+      - run: ssh-add - <<< "${{ secrets.GIT_SSH_PRIVATE_KEY }}"      
       - run: |
           wget https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz
           mkdir sfdx-cli
           tar xJf sfdx-linux-amd64.tar.xz -C sfdx-cli --strip-components 1
-          ./sfdx-cli/install
-      - name: Test Salesforce CLI
-      - run: sfdx --version          
-      - name: Clone Git Repo and create Branch
+          ./sfdx-cli/install      
+      - run: sfdx --version                
       - run: |          
           git clone ${{ secrets.GIT_REPOSITORY_CONNECTION }}
           cd salesforce-gmail
