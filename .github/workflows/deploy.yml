@@ -41,5 +41,5 @@ jobs:
 
           sfdx force:mdapi:describemetadata > ../sfdx_types.json          
           cat ../sfdx_types.json
-          sfdx_types=$(cat ../sfdx_types.json | jq -r '.metadataObjects')
+          sfdx_types=$(cat ../sfdx_types.json | jq -r '.metadataObjects[].xmlName')
           echo $sfdx_types 
