@@ -53,9 +53,12 @@ jobs:
 
           retrieve_salesforce_type() {
             local sfdx_type=$1
-            if [ $sfdx_type -eq "MutingPermissionSet" ]; then
-              return
-            fi 
+
+            # Skip Unsupported Types NB may 
+            # if [ $sfdx_type -eq "MutingPermissionSet" ]; then
+            #   return
+            # fi 
+
             local sfdx_type_output="../sfdx_type_${sfdx_type}.json"                        
             sfdx force:source:retrieve --metadata=$sfdx_type --loglevel=error > $sfdx_type_output
           } 
@@ -63,11 +66,9 @@ jobs:
           # Get each Metadata Type from Salesforce
           sfdx_types=$(cat ../sfdx_types.json | jq -r '.result.metadataObjects[].xmlName')
           for sfdx_type in $sfdx_types; do               
-            retrieve_salesforce_type $sfdx_type &
+            retrieve_salesforce_type $sfdx_type & # & means run function in background thread
           done
-          wait
-
-          exit 0
+          wait # for background threads to complete
 
           # Add to Git temporary branch
           git add -A
