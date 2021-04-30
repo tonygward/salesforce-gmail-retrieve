@@ -20,15 +20,19 @@ jobs:
           wget https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz
           mkdir sfdx-cli
           tar xJf sfdx-linux-amd64.tar.xz -C sfdx-cli --strip-components 1
-          ./sfdx-cli/install                        
-      - run: jq
+          ./sfdx-cli/install                              
       - run: | 
           export SFDX_CONTENT_TYPE=JSON
           echo ${{ secrets.SALESFORCE_AUTH_URL }} > sfdx.url
           sfdx force:auth:sfdxurl:store -f sfdx.url --setdefaultdevhubusername > sfdx_login.json 2>&1
           rm sfdx.url 
-          # TODO: check sfdx_login.json for error message
-          # login_status=$(cat sfdx_login.json | jq           
+
+          cat sfdx_login.json          
+          login_status=$(cat sfdx_login.json | jq '.status')
+          if [ $login_status -ne 0 ]; then
+            echo "ERROR unable to login to Salesforce"
+            exit 1
+          fi           
       - run: |          
           git clone ${{ secrets.GIT_REPOSITORY_CONNECTION }}
           cd ${{ secrets.GIT_REPOSITORY_FOLDER }}
