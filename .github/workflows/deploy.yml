@@ -5,7 +5,7 @@ on:
       - master
 jobs:
   build:
-    name: Build & Deploy
+    name: Setup
     runs-on: ubuntu-latest
     steps:
       - uses: webfactory/ssh-agent@v0.5.2     
@@ -24,6 +24,6 @@ jobs:
       - run: sfdx --version                
       - run: |          
           git clone ${{ secrets.GIT_REPOSITORY_CONNECTION }}
-          cd salesforce-gmail
+          cd ${{ secrets.GIT_REPOSITORY_FOLDER }}
           temp_branch=$(date +'%Y%m%d-%H%M%S%N')
           git checkout -q -b $temp_branch          
