@@ -33,11 +33,17 @@ jobs:
             echo "ERROR unable to login to Salesforce"
             echo cat sfdx_login.json | jq '.message'
             exit 1
-          fi                    
+          fi                         
       - run: |          
           # Clone Git Repository
           git clone ${{ secrets.GIT_REPOSITORY_CONNECTION }}
           cd ${{ secrets.GIT_REPOSITORY_FOLDER }}
+
+          # Configure Git
+          git_username="Tony"
+          git_email="tonygward@googlemail.com"
+          git config --global user.name ${git_username}
+          git config --global user.email ${git_email}
 
           # Create Git branch
           temp_branch=$(date +'%Y%m%d-%H%M%S%N')
@@ -59,10 +65,6 @@ jobs:
             # if [ $sfdx_type -eq "MutingPermissionSet" ]; then
             #   return
             # fi 
-
-            if [ $sfdx_type -ne "ApexClass" ]; then
-              return
-            fi
 
             local sfdx_type_output="../sfdx_type_${sfdx_type}.json"                        
             sfdx force:source:retrieve --metadata=$sfdx_type --loglevel=error > $sfdx_type_output
