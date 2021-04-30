@@ -16,13 +16,17 @@ jobs:
           ref: refs/heads/master
           fetch-depth: 1
           ssh-private-key: ${{ secrets.GIT_SSH_PRIVATE_KEY }}            
-      - run: ssh-add - <<< "${{ secrets.GIT_SSH_PRIVATE_KEY }}"      
       - run: |
+          # Configure SSH Key
+          ssh-add - <<< "${{ secrets.GIT_SSH_PRIVATE_KEY }}"      
+      - run: |
+          # Install SFDX
           wget https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz
           mkdir sfdx-cli
           tar xJf sfdx-linux-amd64.tar.xz -C sfdx-cli --strip-components 1
           ./sfdx-cli/install                              
       - run: | 
+          # Connect to Salesforce
           export SFDX_CONTENT_TYPE=JSON
           echo ${{ secrets.SALESFORCE_AUTH_URL }} > sfdx.url
           sfdx force:auth:sfdxurl:store --sfdxurlfile=sfdx.url --setdefaultusername > sfdx_login.json 2>&1
