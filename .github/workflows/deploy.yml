@@ -39,15 +39,7 @@ jobs:
           temp_branch=$(date +'%Y%m%d-%H%M%S%N')
           git checkout -q -b $temp_branch     
 
-          sfdx force:mdapi:describemetadata > ../sfdx_types.json
-          cat ../sfdx_types.json    
-          # sfdx_types_status=$(cat ../sfdx_types.json | jq '.status')
-          # if [ $sfdx_types_status -ne 0 ]; then
-          #   echo "ERROR unable to read Salesforce Metadata Types"
-          #   echo cat sfdx_login.json | jq '.message'
-          #   exit 1            
-          # fi
-
+          sfdx force:mdapi:describemetadata > ../sfdx_types.json          
           # cat ../sfdx_types.json
-          # sfdx_types=$(cat ../sfdx_types.json | jq -r '.result.metadataObjects[].xmlName')
-          # echo $sfdx_types 
+          sfdx_types=$(cat ../sfdx_types.json | jq -r '.result.metadataObjects[].xmlName')
+          echo $sfdx_types 
