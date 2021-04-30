@@ -48,5 +48,6 @@ jobs:
             exit 1            
           fi
 
-          sfdx_types=$(cat ../sfdx_types.json | jq -r '.result.metadataObjects[].xmlName')
-          echo $sfdx_types 
+          cat ../sfdx_types.json
+          # sfdx_types=$(cat ../sfdx_types.json | jq -r '.result.metadataObjects[].xmlName')
+          # echo $sfdx_types 
