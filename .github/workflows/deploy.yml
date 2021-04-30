@@ -17,5 +17,6 @@ jobs:
           ssh-private-key: ${{ secrets.GIT_SSH_PRIVATE_KEY }}      
       - run: ssh-add - <<< "${{ secrets.GIT_SSH_PRIVATE_KEY }}"
       - run: |
+          ls      
           git clone ${{ secrets.GIT_REPOSITORY_CONNECTION }}
           ls
