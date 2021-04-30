@@ -20,6 +20,6 @@ jobs:
       - run: ls
       - run: cd ${{ secrets.GIT_REPOSITORY_FOLDER }}    
       - run: temp_branch=$(date +'%Y%m%d-%H%M%S%N')
-      - run: echo $temp_branch
+      - run: echo $temp_branch >&2
       - run: git checkout -q -b $temp_branch  
       # - run: npm    
