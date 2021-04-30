@@ -19,4 +19,4 @@ jobs:
       - run: |          
           git clone ${{ secrets.GIT_REPOSITORY_CONNECTION }} .
           temp_branch=$(date +'%Y%m%d-%H%M%S%N')
-          echo $temp_branch
+          git checkout -q -b $temp_branch
