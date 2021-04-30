@@ -53,13 +53,16 @@ jobs:
 
           retrieve_salesforce_type() {
             local sfdx_type=$1
-            local sfdx_type_output="../sfdx_type_${sfdx_type}.json"            
+            if [ $sfdx_type -eq "MutingPermissionSet" ]; then
+              return
+            fi 
+            local sfdx_type_output="../sfdx_type_${sfdx_type}.json"                        
             sfdx force:source:retrieve --metadata=$sfdx_type --loglevel=error > $sfdx_type_output
           } 
 
           # Get each Metadata Type from Salesforce
           sfdx_types=$(cat ../sfdx_types.json | jq -r '.result.metadataObjects[].xmlName')
-          for sfdx_type in $sfdx_types; do            
+          for sfdx_type in $sfdx_types; do               
             retrieve_salesforce_type $sfdx_type &
           done
           wait
