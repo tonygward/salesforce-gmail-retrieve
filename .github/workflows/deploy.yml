@@ -35,12 +35,10 @@ jobs:
             exit 1
           fi                         
       - run: |          
-          # Clone Git Repository
+          # Clone Git Repository          
           mkdir tmp
           git clone ${{ secrets.GIT_REPOSITORY_CONNECTION }} tmp                    
           cd tmp
-          ls 
-          exit 0
 
           # Configure Git
           git_username="Tony"
@@ -63,12 +61,6 @@ jobs:
 
           retrieve_salesforce_type() {
             local sfdx_type=$1
-
-            # Skip Unsupported Types NB may 
-            # if [ $sfdx_type -eq "MutingPermissionSet" ]; then
-            #   return
-            # fi 
-
             local sfdx_type_output="../sfdx_type_${sfdx_type}.json"                        
             sfdx force:source:retrieve --metadata=$sfdx_type --loglevel=error > $sfdx_type_output
           } 
