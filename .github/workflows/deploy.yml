@@ -34,11 +34,15 @@ jobs:
             exit 1
           fi                    
       - run: |          
+          # Clone Git Repository
           git clone ${{ secrets.GIT_REPOSITORY_CONNECTION }}
           cd ${{ secrets.GIT_REPOSITORY_FOLDER }}
+
+          # Create Git branch
           temp_branch=$(date +'%Y%m%d-%H%M%S%N')
           git checkout -q -b $temp_branch     
 
+          # Get Salesforce Metadata Types
           sfdx force:mdapi:describemetadata --json > ../sfdx_types.json                    
           sfdx_types_status=$(cat ../sfdx_types.json | jq -r '.result')
           if [ $sfdx_types_status -ne 0 ]; then
@@ -47,7 +51,21 @@ jobs:
             exit 1
           fi
 
+          # Get each Metadata Type from Salesforce
           sfdx_types=$(cat ../sfdx_types.json | jq -r '.result.metadataObjects[].xmlName')
           for sfdx_type in $sfdx_types; do
             sfdx force:source:retrieve -m $sfdx_type --loglevel=error
           done
+
+          # Add to Git temporary branch
+          git add -A
+          git commit -m $temp_branch
+          git push --set-upstream origin $temp_branch
+
+          # Merge into Git target branch
+          target_branch='master'
+          git merge $target_branch
+          git checkout $target_branch
+          git merge $target_branch
+          git push --set-upstream origin $target_branch
+
