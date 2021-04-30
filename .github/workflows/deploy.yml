@@ -24,7 +24,7 @@ jobs:
       - run: | 
           export SFDX_CONTENT_TYPE=JSON
           echo ${{ secrets.SALESFORCE_AUTH_URL }} > sfdx.url
-          sfdx force:auth:sfdxurl:store -f sfdx.url --setdefaultdevhubusername > sfdx_login.json 2>&1
+          sfdx force:auth:sfdxurl:store -f sfdx.url --setdefaultusername > sfdx_login.json 2>&1
           rm sfdx.url 
      
           login_status=$(cat sfdx_login.json | jq '.status')
@@ -39,8 +39,8 @@ jobs:
           temp_branch=$(date +'%Y%m%d-%H%M%S%N')
           git checkout -q -b $temp_branch     
 
-          sfdx_username=$(cat ../sfdx_login.json | jq '.result.username')           
-          sfdx config:set defaultusername=$sfdx_username
+          # sfdx_username=$(cat ../sfdx_login.json | jq '.result.username')           
+          # sfdx config:set defaultusername=$sfdx_username
 
-          # sfdx force:mdapi:describemetadata > ./sfdx_types.json
+          sfdx force:mdapi:describemetadata > ./sfdx_types.json
           # cat ./sfdx_types.json    
