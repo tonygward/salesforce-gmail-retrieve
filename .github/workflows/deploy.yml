@@ -21,13 +21,14 @@ jobs:
           mkdir sfdx-cli
           tar xJf sfdx-linux-amd64.tar.xz -C sfdx-cli --strip-components 1
           ./sfdx-cli/install                        
+      - run: jq
       - run: | 
           export SFDX_CONTENT_TYPE=JSON
           echo ${{ secrets.SALESFORCE_AUTH_URL }} > sfdx.url
           sfdx force:auth:sfdxurl:store -f sfdx.url --setdefaultdevhubusername > sfdx_login.json 2>&1
           rm sfdx.url 
           # TODO: check sfdx_login.json for error message
-          cat sfdx_login.json          
+          # login_status=$(cat sfdx_login.json | jq           
       - run: |          
           git clone ${{ secrets.GIT_REPOSITORY_CONNECTION }}
           cd ${{ secrets.GIT_REPOSITORY_FOLDER }}
