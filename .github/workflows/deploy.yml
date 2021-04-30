@@ -39,8 +39,5 @@ jobs:
           temp_branch=$(date +'%Y%m%d-%H%M%S%N')
           git checkout -q -b $temp_branch     
 
-          # sfdx_username=$(cat ../sfdx_login.json | jq '.result.username')           
-          # sfdx config:set defaultusername=$sfdx_username
-
-          sfdx force:mdapi:describemetadata > ./sfdx_types.json
-          # cat ./sfdx_types.json    
+          sfdx force:mdapi:describemetadata > ../sfdx_types.json
+          cat ../sfdx_types.json    
