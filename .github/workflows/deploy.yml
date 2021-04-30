@@ -32,7 +32,9 @@ jobs:
           if [ $login_status -ne 0 ]; then
             echo "ERROR unable to login to Salesforce"
             exit 1
-          fi           
+          fi
+          default_username=$(cat sfdx_login.json | jq '.result.username')           
+          sfdx config:set defaultusername=$default_username
       - run: |          
           git clone ${{ secrets.GIT_REPOSITORY_CONNECTION }}
           cd ${{ secrets.GIT_REPOSITORY_FOLDER }}
