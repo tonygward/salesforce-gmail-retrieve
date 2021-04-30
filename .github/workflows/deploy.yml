@@ -8,14 +8,15 @@ jobs:
     name: Build & Deploy
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Setup key
-      uses: ./
-      with:
-          ssh-private-key: ${{ secrets.GIT_SSH_PRIVATE_KEY }}        
+      - uses: actions/checkout@v2      
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock                 
+        with:
           ref: refs/heads/master
-          fetch-depth: 1          
-    - run: |
-        ssh-add -l
-        echo SSH_AUTH_SOCK is at $SSH_AUTH_SOCK
-        git clone ${{ secrets.GIT_REPOSITORY_CONNECTION }}    
+          fetch-depth: 1
+      - uses: webfactory/ssh-agent@v0.5.2
+        with:
+          ssh-private-key: ${{ secrets.GIT_SSH_PRIVATE_KEY }}
+      - run: ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+      - run: ssh-add - <<< "${{ secrets.GIT_SSH_PRIVATE_KEY }}"
+      - run: git clone ${{ secrets.GIT_REPOSITORY_CONNECTION }}    
