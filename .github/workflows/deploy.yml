@@ -16,8 +16,11 @@ jobs:
           fetch-depth: 1
           ssh-private-key: ${{ secrets.GIT_SSH_PRIVATE_KEY }}      
       - run: ssh-add - <<< "${{ secrets.GIT_SSH_PRIVATE_KEY }}"
-      - run: npm install sfdx-cli
+      - run: |
+          npm install sfdx-cli
+          sfdx 
       - run: |          
-          git clone ${{ secrets.GIT_REPOSITORY_CONNECTION }} .
+          git clone ${{ secrets.GIT_REPOSITORY_CONNECTION }}
+          cd salesforce-gmail
           temp_branch=$(date +'%Y%m%d-%H%M%S%N')
           git checkout -q -b $temp_branch          
