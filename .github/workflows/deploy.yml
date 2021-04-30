@@ -12,4 +12,5 @@ jobs:
         with:
           ref: refs/heads/master
           fetch-depth: 1
+      - run: git
       - run: git clone ${{ secrets.GIT_REPOSITORY_CONNECTION }}    
