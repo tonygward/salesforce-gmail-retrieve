@@ -37,9 +37,8 @@ jobs:
           git clone ${{ secrets.GIT_REPOSITORY_CONNECTION }}
           cd ${{ secrets.GIT_REPOSITORY_FOLDER }}
           temp_branch=$(date +'%Y%m%d-%H%M%S%N')
-          git checkout -q -b $temp_branch       
-          cat ../sfdx_login.json
-          # default_username=$(cat sfdx_login.json | jq '.result.username')           
-          # sfdx config:set defaultusername=$default_username         
+          git checkout -q -b $temp_branch                 
+          default_username=$(cat ../sfdx_login.json | jq '.result.username')           
+          sfdx config:set defaultusername=$default_username         
           # sfdx force:mdapi:describemetadata > ./sfdx_types.json
           # cat ./sfdx_types.json    
