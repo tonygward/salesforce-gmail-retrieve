@@ -26,7 +26,7 @@ jobs:
           export SFDX_CONTENT_TYPE=JSON
           echo ${{ secrets.SALESFORCE_AUTH_URL }} > sfdx.url
           sfdx force:auth:sfdxurl:store -f sfdx.url --setdefaultdevhubusername
-          # rm /sfdx.url
+          rm sfdx.url
       - run: |          
           git clone ${{ secrets.GIT_REPOSITORY_CONNECTION }}
           cd ${{ secrets.GIT_REPOSITORY_FOLDER }}
