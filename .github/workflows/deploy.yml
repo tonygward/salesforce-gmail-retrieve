@@ -12,7 +12,9 @@ jobs:
     - name: Setup key
       uses: ./
       with:
-          ssh-private-key: ${{ secrets.GIT_SSH_PRIVATE_KEY }}
+          ssh-private-key: ${{ secrets.GIT_SSH_PRIVATE_KEY }}        
+          ref: refs/heads/master
+          fetch-depth: 1          
     - run: |
         ssh-add -l
         echo SSH_AUTH_SOCK is at $SSH_AUTH_SOCK
