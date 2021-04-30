@@ -17,7 +17,10 @@ jobs:
           ssh-private-key: ${{ secrets.GIT_SSH_PRIVATE_KEY }}      
       - run: ssh-add - <<< "${{ secrets.GIT_SSH_PRIVATE_KEY }}"
       - run: |
-          npm install sfdx-cli
+          wget https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz
+          mkdir sfdx-cli
+          tar xJf sfdx-linux-amd64.tar.xz -C sfdx-cli --strip-components 
+          ./sfdx-cli/install
           sfdx 
       - run: |          
           git clone ${{ secrets.GIT_REPOSITORY_CONNECTION }}
