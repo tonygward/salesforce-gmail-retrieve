@@ -20,14 +20,13 @@ jobs:
           wget https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz
           mkdir sfdx-cli
           tar xJf sfdx-linux-amd64.tar.xz -C sfdx-cli --strip-components 1
-          ./sfdx-cli/install      
-      - run: sfdx --version                
+          ./sfdx-cli/install                        
       - run: | 
           export SFDX_CONTENT_TYPE=JSON
           echo ${{ secrets.SALESFORCE_AUTH_URL }} > sfdx.url
-          sfdx_login=$(sfdx force:auth:sfdxurl:store -f sfdx.url --setdefaultdevhubusername)          
+          sfdx force:auth:sfdxurl:store -f sfdx.url --setdefaultdevhubusername > sfdx_login.json
           rm sfdx.url
-          echo $sfdx_login
+          cat sfdx_login.json
       - run: |          
           git clone ${{ secrets.GIT_REPOSITORY_CONNECTION }}
           cd ${{ secrets.GIT_REPOSITORY_FOLDER }}
