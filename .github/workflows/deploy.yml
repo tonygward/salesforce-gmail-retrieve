@@ -19,4 +19,6 @@ jobs:
       - run: git clone ${{ secrets.GIT_REPOSITORY_CONNECTION }}
       - run: cd ${{ secrets.GIT_REPOSITORY_FOLDER }}    
       - run: temp_branch=$(date +'%Y%m%d-%H%M%S%N')
-      - run: git checkout -q -b $temp_branch      
+      - run: ls
+      # - run: git checkout -q -b $temp_branch  
+      # - run: npm    
