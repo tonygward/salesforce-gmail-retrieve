@@ -37,6 +37,8 @@ jobs:
       - run: |          
           # Clone Git Repository
           git clone ${{ secrets.GIT_REPOSITORY_CONNECTION }}
+          
+          # TODO: use a default folder instead e.g. tmp
           cd ${{ secrets.GIT_REPOSITORY_FOLDER }}
 
           # Configure Git
@@ -88,4 +90,8 @@ jobs:
           git checkout $target_branch
           git merge $target_branch
           git push --set-upstream origin $target_branch
+
+          # Remove temporary branch
+          git branch -d $target_branch
+          git push origin :$target_branch
 
