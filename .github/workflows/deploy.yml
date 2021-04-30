@@ -49,7 +49,4 @@ jobs:
           fi
 
           sfdx_types=$(cat ../sfdx_types.json | jq -r '.result.metadataObjects[].xmlName')
-          for sfdx_type in $sfdx_types; do 
-            echo $sfdx_type
-            # retrieve_salesforce_type "$sfdx_type" &
-          done 
+          echo $sfdx_types 
