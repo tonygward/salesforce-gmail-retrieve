@@ -22,8 +22,13 @@ jobs:
           tar xJf sfdx-linux-amd64.tar.xz -C sfdx-cli --strip-components 1
           ./sfdx-cli/install      
       - run: sfdx --version                
+      - run: | 
+          export SFDX_CONTENT_TYPE=JSON
+          echo ${{ secrets.SALESFORCE_AUTH_URL }} > /sfdx.url
+          sfdx force:auth:sfdxurl:store -f /sfdx.url --setdefaultdevhubusername
+          rm /sfdx.url
       - run: |          
           git clone ${{ secrets.GIT_REPOSITORY_CONNECTION }}
           cd ${{ secrets.GIT_REPOSITORY_FOLDER }}
           temp_branch=$(date +'%Y%m%d-%H%M%S%N')
-          git checkout -q -b $temp_branch          
+          git checkout -q -b $temp_branch                    
