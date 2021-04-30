@@ -25,9 +25,12 @@ jobs:
           export SFDX_CONTENT_TYPE=JSON
           echo ${{ secrets.SALESFORCE_AUTH_URL }} > sfdx.url
           sfdx force:auth:sfdxurl:store -f sfdx.url --setdefaultdevhubusername > sfdx_login.json 2>&1
-          rm sfdx.url          
+          rm sfdx.url 
+          # TODO: check sfdx_login.json for error message         
       - run: |          
           git clone ${{ secrets.GIT_REPOSITORY_CONNECTION }}
           cd ${{ secrets.GIT_REPOSITORY_FOLDER }}
           temp_branch=$(date +'%Y%m%d-%H%M%S%N')
-          git checkout -q -b $temp_branch                    
+          git checkout -q -b $temp_branch                
+          sfdx force:mdapi:describemetadata > ./sfdx_types.json
+          cat ./sfdx_types.json    
