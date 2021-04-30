@@ -24,7 +24,7 @@ jobs:
       - run: | 
           export SFDX_CONTENT_TYPE=JSON
           echo ${{ secrets.SALESFORCE_AUTH_URL }} > sfdx.url
-          sfdx force:auth:sfdxurl:store -f sfdx.url --setdefaultusername > sfdx_login.json 2>&1
+          sfdx force:auth:sfdxurl:store --sfdxurlfile=sfdx.url --setdefaultusername > sfdx_login.json 2>&1
           rm sfdx.url 
      
           login_status=$(cat sfdx_login.json | jq '.status')
