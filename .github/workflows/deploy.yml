@@ -36,10 +36,11 @@ jobs:
           fi                         
       - run: |          
           # Clone Git Repository
-          git clone ${{ secrets.GIT_REPOSITORY_CONNECTION }}
-          
-          # TODO: use a default folder instead e.g. tmp
-          cd ${{ secrets.GIT_REPOSITORY_FOLDER }}
+          mkdir tmp
+          git clone ${{ secrets.GIT_REPOSITORY_CONNECTION }} tmp                    
+          cd tmp
+          ls 
+          exit 0
 
           # Configure Git
           git_username="Tony"
