@@ -20,4 +20,4 @@ jobs:
           git clone ${{ secrets.GIT_REPOSITORY_CONNECTION }} .
           temp_branch=$(date +'%Y%m%d-%H%M%S%N')
           git checkout -q -b $temp_branch
-          sfdx
+          npm install --global sfdx-cli
