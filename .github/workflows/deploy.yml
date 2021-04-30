@@ -53,9 +53,8 @@ jobs:
 
           retrieve_salesforce_type() {
             local sfdx_type=$1
-            local sfdx_type_output="../sfdx_type${sfdx_type}.json"
-            echo $sfdx_type_output
-            # sfdx force:source:retrieve --metadata=$sfdx_type --loglevel=error > ../sfdx_type_
+            local sfdx_type_output="../sfdx_type_${sfdx_type}.json"            
+            sfdx force:source:retrieve --metadata=$sfdx_type --loglevel=error > $sfdx_type_output
           } 
 
           # Get each Metadata Type from Salesforce
@@ -64,6 +63,8 @@ jobs:
             # sfdx force:source:retrieve --metadata=$sfdx_type --loglevel=error
             retrieve_salesforce_type $sfdx_type
           done
+
+          exit 0
 
           # Add to Git temporary branch
           git add -A
